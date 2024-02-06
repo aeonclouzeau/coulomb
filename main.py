@@ -2,7 +2,7 @@ import math
 
 
 # Convertir unidades de distancia a metros r = distancia
-def convert_to_meters(r, unidad):
+def convertir_a_metros(r, unidad):
     if unidad.lower() == "m":
         return r
     elif unidad.lower() == "cm":
@@ -16,7 +16,7 @@ def convert_to_meters(r, unidad):
 
 
 # Función para obtener fuerza electroestática entre dos cargas
-def calculate_force(q1, q2, r):
+def calcular_fuerza(q1, q2, r):
     k = 9e9  # Constante de Coulomb 9x10^9 Nm^2/C^2
     return k * abs(q1) * abs(q2) / (r ** 2)
 
