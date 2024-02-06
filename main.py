@@ -19,3 +19,11 @@ def convert_to_meters(r, unidad):
 def calculate_force(q1, q2, r):
     k = 9e9  # Constante de Coulomb 9x10^9 Nm^2/C^2
     return k * abs(q1) * abs(q2) / (r ** 2)
+
+
+def calcular_fuerza_resultante(fuerza):
+    fuerza_resultante = [0][0]  # Inicia al centro del plano
+    for fuerza in fuerzas:
+        fuerza_resultante[0] += fuerza[0]  # Suma de las fuerzas en eje x
+        fuerza_resultante[1] += fuerza[1]  # Suma ed las fuerzas en eje y
+    return fuerza_resultante
