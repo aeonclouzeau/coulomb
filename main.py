@@ -1,7 +1,7 @@
 import math
 
 
-# Convertir unidades de distancia a metros r = distancia
+# Convertir unidades de distancia a metros (r = distancia)
 def convertir_a_metros(r, unidad):
     if unidad.lower() == "m":
         return r
@@ -27,3 +27,11 @@ def calcular_fuerza_resultante(fuerza):
         fuerza_resultante[0] += fuerza[0]  # Suma de las fuerzas en eje x
         fuerza_resultante[1] += fuerza[1]  # Suma ed las fuerzas en eje y
     return fuerza_resultante
+
+
+# Obtener magnitud y direccion de la fuerza resultante
+def calcular_magnitud_direccion(fuerza):
+    magnitud = math.sqrt(fuerza[0] ** 2 + fuerza[1] ** 2)
+    direccion = math.atan2(fuerza[1], fuerza[0]) * (180 / math.pi)
+    return magnitud, direccion
+
