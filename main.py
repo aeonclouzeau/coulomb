@@ -37,10 +37,6 @@ def calcular_magnitud_direccion(fuerza):
 
 
 def main():
-    num_cargas = int(input("Ingrese el número de cargas (máximo 4): "))
-
-    if 2 <= num_cargas <= 4:
-        print("Número de cargas inválido. Debe estár en un rango de 2 a 4.")
 
     # Listas para los valores
     cargas = []
@@ -48,7 +44,7 @@ def main():
     fuerzas = []
 
     # Obtener datos de las cargas
-    for i in range(num_cargas):
+    for i in range(2):
         carga = float(input(f"Ingrese el VALOR de la CARGA {i+1} (en Coulombs): "))
         cargas.append(carga)
 
@@ -57,7 +53,7 @@ def main():
             unidad = input("¿En qué UNIDAD se ingreso la distancia (m, cm, mm, km)? ")
             distancias.append(convertir_a_metros(distancia, unidad))
 
-    # Calcular las fuerzas entre cada par de cargas mediante la formula de Coulomb.
+    # Calcular las fuerzas entre cada par de cargas mediante la formula de Coulomb
     for i in range(len(cargas) - 1):
         distancia = distancias[i]
         fuerza = calcular_fuerza(cargas[i], cargas[i + 1], distancia)
