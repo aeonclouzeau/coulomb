@@ -39,9 +39,10 @@ def calcular_magnitud_direccion(fuerza):
 def main():
     num_cargas = int(input("Ingrese el número de cargas (máximo 4): "))
 
-    if 2 < num_cargas > 4:
+    if 2 <= num_cargas <= 4:
         print("Número de cargas inválido. Debe estár en un rango de 2 a 4.")
 
+    # Listas para los valores
     cargas = []
     distancias = []
     fuerzas = []
@@ -56,11 +57,13 @@ def main():
             unidad = input("¿En qué UNIDAD se ingreso la distancia (m, cm, mm, km)? ")
             distancias.append(convertir_a_metros(distancia, unidad))
 
-    # Calcular las fuerzas entre cada par de cargas mediante la formula de Coulomb, sacar angulos y descomposicion,
+    # Calcular las fuerzas entre cada par de cargas mediante la formula de Coulomb.
     for i in range(len(cargas) - 1):
         distancia = distancias[i]
         fuerza = calcular_fuerza(cargas[i], cargas[i + 1], distancia)
+        # Obtener el angulo con respecto a la horizontal en eje X
         angulo = math.atan2(cargas[i + 1], cargas[i]) * (180 / math.pi)
+        # Descomposicion de los angulos para obtener magnitud de FRx y Fry
         vector_x = fuerza * math.cos(angulo)
         vector_y = fuerza * math.sin(angulo)
         fuerzas.append([vector_x, vector_y])
