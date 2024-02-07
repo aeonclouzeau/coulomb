@@ -40,28 +40,30 @@ def main():
 
     # Listas para los valores
     cargas = []
-    distancias = []
     fuerzas = []
 
     # Obtener datos de las cargas
-    for i in range(2):
+    for i in range(3):
         carga = float(input(f"Ingrese el VALOR de la CARGA {i+1} (en Coulombs): "))
         cargas.append(carga)
 
-        if i > 0:
-            distancia = float(input(f"Ingrese la DISTANCIA entre la carga {i} y la carga {i+1}: "))
-            unidad = input("¿En qué UNIDAD se ingreso la distancia (m, cm, mm, km)? ")
-            distancias.append(convertir_a_metros(distancia, unidad))
+    # Obtener la distancia entre cada par de cargas
+    distancias = []
+    for i in range(2):
+        distancia = float(input(f"Ingrese la DISTANCIA entre la carga {i+1} y la carga {i+2}: "))
+        unidad = input("¿En qué unidad ingreso la distancia (mm, cm, m, km)? ")
+        distancias.append(convertir_a_metros(distancia, unidad))
 
     # Calcular las fuerzas entre cada par de cargas mediante la formula de Coulomb
     for i in range(len(cargas) - 1):
-        distancia = distancias[i]
-        fuerza = calcular_fuerza(cargas[i], cargas[i + 1], distancia)
-        # Obtener el angulo con respecto a la horizontal en eje X
-        angulo = math.atan2(cargas[i + 1], cargas[i]) * (180 / math.pi)
+        fuerza = calcular_fuerza(cargas[i], cargas[i + 1], distancias[i])
+        # Calcular el ángulo respecto al eje horizontal (eje X)
+        angulo = math.atan2(distancias[i], distancias[i]) * (180 / math.pi)
         # Descomposicion de los angulos para obtener magnitud de FRx y Fry
-        vector_x = fuerza * math.cos(angulo)
-        vector_y = fuerza * math.sin(angulo)
+        vector_x = fuerza * math.cos(math.radians(angulo))
+        print(f"FRx = {vector_x}")
+        vector_y = fuerza * math.sin(math.radians(angulo))
+        print(f"FRy = {vector_y}")
         fuerzas.append([vector_x, vector_y])
 
     # Calcular FR
@@ -71,6 +73,7 @@ def main():
     magnitud, direccion = calcular_magnitud_direccion(fuerza_resultante)
 
     # Impresión de todos los resultados
+    print(f"La fuerza electroestatica es: {fuerza}")
     print(f"La fuerza resultante en el eje X es: {fuerza_resultante[0]} N")
     print(f"La fuerza resultante en el eje Y es: {fuerza_resultante[1]} N")
     print(f"La magnitud de la fuerza resultante es: {magnitud} N")
