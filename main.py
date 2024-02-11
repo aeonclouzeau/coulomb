@@ -15,6 +15,27 @@ def convertir_a_metros(r, unidad):
         raise ValueError("Unidad de distancia no valida. Ingrese m, cm, mm o km")
 
 
+def conversion_coulomb(carga, unidad):
+    if unidad.lower() == "c":  # coulomb
+        return carga
+    elif unidad.lower() == "gc":  # gigacoulomb
+        return carga * 1e9
+    elif unidad.lower() == "mgc":  # megacoulomb
+        return carga * 1e6
+    elif unidad.lower() == "kc":  # kilocoulomb
+        return carga * 1e3
+    elif unidad.lower() == "mc":  # milicoulomb
+        return carga * 1e-3
+    elif unidad.lower() == "uc":  # microcoulomb
+        return carga * 1e-6
+    elif unidad.lower() == "nc":  # nanocoulomb
+        return carga * 1e-9
+    elif unidad.lower() == "pc":  # picocoulomb
+        return carga * 1e-12
+    else:
+        raise ValueError("El valor no coincide con ninguna unidad válida. Verifica el input.")
+
+
 # Función para obtener fuerza electroestática entre dos cargas
 def calcular_fuerza(q1, q2, r):
     k = 9e9  # Constante de Coulomb 9x10^9 Nm^2/C^2
@@ -44,8 +65,11 @@ def main():
 
     # Obtener datos de las cargas
     for i in range(3):
-        carga = float(input(f"Ingrese el VALOR de la CARGA {i+1} (en Coulombs): "))
-        cargas.append(carga)
+        carga = float(input(f"Ingrese el VALOR de la CARGA {i+1}: "))
+        unidad = input("¿En qué unidad de Coulomb se encuentra la carga ("
+                       "gigacoulomb = gc, megacoulomb = mgc, kilocoulomb = kc, coulomb = c, milicoulomb = mc, "
+                       "microcoulomb = uc, nanocoulomb = nc, picocoulomb = pc)? ")
+        cargas.append(conversion_coulomb(carga, unidad))
 
     # Obtener la distancia entre cada par de cargas
     distancias = []
@@ -60,9 +84,9 @@ def main():
         # Calcular el ángulo respecto al eje horizontal (eje X)
         angulo = math.atan2(distancias[i], distancias[i]) * (180 / math.pi)
         # Descomposicion de los angulos para obtener magnitud de FRx y Fry
-        vector_x = fuerza * math.cos(math.radians(angulo))
+        vector_x = fuerza * math.cos(angulo)
         print(f"FRx = {vector_x}")
-        vector_y = fuerza * math.sin(math.radians(angulo))
+        vector_y = fuerza * math.sin(angulo)
         print(f"FRy = {vector_y}")
         fuerzas.append([vector_x, vector_y])
 
@@ -73,7 +97,7 @@ def main():
     magnitud, direccion = calcular_magnitud_direccion(fuerza_resultante)
 
     # Impresión de todos los resultados
-    print(f"La fuerza electroestatica es: {fuerza}")
+    print(f"La fuerza electroestatica es: {fuerza} N")
     print(f"La fuerza resultante en el eje X es: {fuerza_resultante[0]} N")
     print(f"La fuerza resultante en el eje Y es: {fuerza_resultante[1]} N")
     print(f"La magnitud de la fuerza resultante es: {magnitud} N")
