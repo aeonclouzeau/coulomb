@@ -93,19 +93,16 @@ def main():
         angulo = math.atan2(distancias[i], distancias[i]) * (180 / math.pi)
         # Descomposicion de los angulos para obtener magnitud de FRx y Fry
         vector_x = fuerza * math.cos(angulo)
-        print(f"FRx = {vector_x}")
         vector_y = fuerza * math.sin(angulo)
-        print(f"FRy = {vector_y}")
         fuerzas.append([vector_x, vector_y])
 
-    # Calcular FR
+    # Calcular Fuerza Resultante
     fuerza_resultante = calcular_fuerza_resultante(fuerzas)
 
     # Obtener magnitud y direccion de la fuerza resultante
     magnitud, direccion = calcular_magnitud_direccion(fuerza_resultante)
 
     # Impresión de todos los resultados
-    print(f"La fuerza electroestatica es: {fuerza} N")
     print(f"La fuerza resultante en el eje X es: {fuerza_resultante[0]} N")
     print(f"La fuerza resultante en el eje Y es: {fuerza_resultante[1]} N")
     print(f"La magnitud de la fuerza resultante es: {magnitud} N")
