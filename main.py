@@ -36,6 +36,12 @@ def conversion_coulomb(carga, unidad):
         raise ValueError("El valor no coincide con ninguna unidad válida. Verifica el input.")
 
 
+def obtener_distancia(coord1, coord2):
+    x1, y1 = coord1
+    x2, y2 = coord2
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+
 # Función para obtener fuerza electroestática entre dos cargas
 def calcular_fuerza(q1, q2, r):
     k = 9e9  # Constante de Coulomb 9x10^9 Nm^2/C^2
@@ -58,9 +64,9 @@ def calcular_magnitud_direccion(fuerza):
 
 
 def main():
-
-    # Listas para los valores
     cargas = []
+    coordenadas = []
+    distancias = []
     fuerzas = []
 
     # Obtener datos de las cargas
@@ -69,13 +75,15 @@ def main():
         unidad = input("¿En qué unidad de Coulomb se encuentra la carga ("
                        "gigacoulomb = gc, megacoulomb = mgc, kilocoulomb = kc, coulomb = c, milicoulomb = mc, "
                        "microcoulomb = uc, nanocoulomb = nc, picocoulomb = pc)? ")
+        x = float(input(f"Ingrese la coordenada X de la CARGA {i+1}: "))
+        y = float(input(f"Ingrese la coordenada Y de la CARGA {i+1}: "))
         cargas.append(conversion_coulomb(carga, unidad))
+        coordenadas.append((x, y))
 
     # Obtener la distancia entre cada par de cargas
-    distancias = []
     for i in range(2):
-        distancia = float(input(f"Ingrese la DISTANCIA entre la carga {i+1} y la carga {i+2}: "))
-        unidad = input("¿En qué unidad ingreso la distancia (mm, cm, m, km)? ")
+        distancia = obtener_distancia(coordenadas[i], coordenadas[i+1])
+        unidad = input("¿En qué unidad se encuentra la distancia (mm, cm, m, km)? ")
         distancias.append(convertir_a_metros(distancia, unidad))
 
     # Calcular las fuerzas entre cada par de cargas mediante la formula de Coulomb
