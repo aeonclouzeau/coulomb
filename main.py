@@ -38,7 +38,9 @@ def conversion_coulomb(carga, unidad):
 
 def obtener_distancia(coord1, coord2):
     x1, y1 = coord1
+    # print(f" coord1 = {coord1}")
     x2, y2 = coord2
+    # print(f" coord2 = {coord2}")
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
 
@@ -59,7 +61,7 @@ def calcular_fuerza_resultante(fuerzas):
 # Obtener magnitud y direccion de la fuerza resultante
 def calcular_magnitud_direccion(fuerza):
     magnitud = math.sqrt(fuerza[0] ** 2 + fuerza[1] ** 2)
-    direccion = math.atan2(fuerza[1], fuerza[0]) * (180 / math.pi)
+    direccion = math.atan2(fuerza[1], fuerza[0])
     return magnitud, direccion
 
 
@@ -83,17 +85,23 @@ def main():
     # Obtener la distancia entre cada par de cargas
     for i in range(2):
         distancia = obtener_distancia(coordenadas[i], coordenadas[i+1])
+        # print(f"distancia = {distancia} de coordenada [i] = {coordenadas[i]} coordenadas [i+1] = {coordenadas[i+1]}")
         unidad = input("¿En qué unidad se encuentra la distancia (mm, cm, m, km)? ")
         distancias.append(convertir_a_metros(distancia, unidad))
 
     # Calcular las fuerzas entre cada par de cargas mediante la formula de Coulomb
     for i in range(len(cargas) - 1):
         fuerza = calcular_fuerza(cargas[i], cargas[i + 1], distancias[i])
+        print(f"fuerza {i+1} = {fuerza}")
         # Calcular el ángulo respecto al eje horizontal (eje X)
-        angulo = math.atan2(distancias[i], distancias[i]) * (180 / math.pi)
+        angulo = abs(math.atan2(coordenadas[i+1][1] - coordenadas[i][1], coordenadas[i+1][0] - coordenadas[i][0]))
+        angulo_grados = math.degrees(angulo)
+        print(f"angulo {i+1} = {angulo_grados}")
         # Descomposicion de los angulos para obtener magnitud de FRx y Fry
         vector_x = fuerza * math.cos(angulo)
+        print(f"Frx {i+1} = {vector_x}")
         vector_y = fuerza * math.sin(angulo)
+        print(f"Fry {i+1} = {vector_y}")
         fuerzas.append([vector_x, vector_y])
 
     # Calcular Fuerza Resultante
@@ -106,7 +114,7 @@ def main():
     print(f"La fuerza resultante en el eje X es: {fuerza_resultante[0]} N")
     print(f"La fuerza resultante en el eje Y es: {fuerza_resultante[1]} N")
     print(f"La magnitud de la fuerza resultante es: {magnitud} N")
-    print(f"La direccion del vector formado por la FR es: {direccion} con respecto al eje X positivo")
+    print(f"La dirección del vector formado por la FR es: {direccion} con respecto al eje X positivo")
 
 
 if __name__ == "__main__":
